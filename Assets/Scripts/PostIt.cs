@@ -22,6 +22,8 @@ public class PostIt : MonoBehaviour
                     stabbingSword.postIts.Add(gameObject);
 
                     transform.parent = stabbingSword.postItParent.transform;
+                    stabbingSword.ArrangeInCircle();
+
                     Debug.Log("Added");
                 }
             }
