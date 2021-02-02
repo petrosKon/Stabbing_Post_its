@@ -6,8 +6,13 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public string swordName;
+    public Transform finalTransform;
     public List<GameObject> postIts;
-    public Vector3 finalPosition;
+
+    public void ReturnToInitialPosition()
+    {
+        transform.position = finalTransform.position;
+    }
 
     private void Update()
     {
