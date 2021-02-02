@@ -20,6 +20,8 @@ public class PostIt : MonoBehaviour
                 if (!stabbingSword.postIts.Contains(gameObject))
                 {
                     stabbingSword.postIts.Add(gameObject);
+
+                    transform.parent = stabbingSword.postItParent.transform;
                     Debug.Log("Added");
                 }
             }

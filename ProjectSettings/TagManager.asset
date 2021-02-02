@@ -7,6 +7,9 @@ TagManager:
   - Placeable
   - projectile
   - FxTemporaire
+  - Sword
+  - Player Hand
+  - Post-It
   layers:
   - Default
   - TransparentFX
