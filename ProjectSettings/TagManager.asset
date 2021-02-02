@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Sword
-  - WallPart
+  - Placeable
+  - projectile
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,7 @@ TagManager:
   - UI
   - 
   - 
+  - PostProcessing
   - 
   - 
   - 
@@ -25,15 +27,14 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PlacePoint
+  - Hand
+  - HandReleasing
+  - HandHolding
+  - Grabbable
+  - Grabbing
+  - Holding
+  - Releasing
   - 
   - 
   - 
