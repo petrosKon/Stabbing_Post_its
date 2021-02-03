@@ -143,8 +143,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.036043007, y: 0.044894934, z: 0.015726702}
-  m_Center: {x: 0.00094010495, y: 0.4607259, z: 0.0025456222}
+  m_Size: {x: 0.026411464, y: 0.06533134, z: 0.015726702}
+  m_Center: {x: 0.0005402998, y: 0.44787413, z: 0.0025456222}
 --- !u!114 &3413959313265005933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   swordName: 
   finalTransform: {fileID: 0}
   postIts: []
-  postItParent: {fileID: 628771720}
+  postItsParent: {fileID: 628771720}
   postItsFinalTransforms:
   - {fileID: 0}
   - {fileID: 0}

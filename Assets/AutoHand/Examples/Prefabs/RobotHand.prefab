@@ -460,7 +460,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   follow: {fileID: 0}
   followPositionOffset: {x: 0, y: 0, z: 0}
-  followSmoothing: 0
   maxVelocity: 5
   followPositionStrength: 35
   followRotationStrength: 30

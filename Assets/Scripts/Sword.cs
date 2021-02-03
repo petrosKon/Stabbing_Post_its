@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Autohand;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ public class Sword : MonoBehaviour
     public string swordName;
     public Transform finalTransform;
     public List<GameObject> postIts = new List<GameObject>();
-    public GameObject postItParent;
+    public GameObject postItsParent;
     public List<Transform> postItsFinalTransforms = new List<Transform>();
+   
 
     private readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
     private readonly Vector3 postItFinalRotation = new Vector3(0, -90, 180);
@@ -30,7 +32,7 @@ public class Sword : MonoBehaviour
         for (int i = 0; i < postIts.Count; i++)
         {
             float angle = i * Mathf.PI * 2f / postIts.Count;
-            Vector3 newPos = new Vector3(Mathf.Cos(angle) * radius, postItParent.transform.localPosition.y, Mathf.Sin(angle) * radius);
+            Vector3 newPos = new Vector3(Mathf.Cos(angle) * radius, postItsParent.transform.localPosition.y, Mathf.Sin(angle) * radius);
             postIts[i].transform.localPosition = newPos;
             postIts[i].transform.localRotation = Quaternion.Euler(postItCircularRotation);
         }
@@ -51,9 +53,14 @@ public class Sword : MonoBehaviour
     private void Update()
     {
         Debug.Log(OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x);
-        if(OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
+        if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
         {
-            postItParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
+            postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
+        }
+        else if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x < -0.5f)
+        {
+            postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
+
         }
     }
 }

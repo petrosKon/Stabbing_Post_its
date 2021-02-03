@@ -160,7 +160,7 @@ MonoBehaviour:
   swordName: 
   finalTransform: {fileID: 0}
   postIts: []
-  postItParent: {fileID: 705384781070052187}
+  postItsParent: {fileID: 705384781070052187}
   postItsFinalTransforms:
   - {fileID: 0}
   - {fileID: 0}

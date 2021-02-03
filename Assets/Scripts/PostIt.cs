@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PostIt : MonoBehaviour
 {
+    [Header("Post-It Properties")]
     public string text;
-    
-    private readonly float stabbingAngle = 140f;
+    public Sword parentSword;
+
+    private readonly float stabbingAngle = 100f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,12 +21,20 @@ public class PostIt : MonoBehaviour
                 Debug.Log("Stabbed");
                 if (!stabbingSword.postIts.Contains(gameObject))
                 {
-                    stabbingSword.postIts.Add(gameObject);
+                    if (parentSword != null && parentSword != stabbingSword)
+                    {
+                        parentSword.postIts.Remove(gameObject);
+                        parentSword.postIts.TrimExcess();
+                        parentSword.ArrangeInCircle();
 
-                    transform.parent = stabbingSword.postItParent.transform;
-                    stabbingSword.ArrangeInCircle();
+                    }
 
-                    Debug.Log("Added");
+                    parentSword = stabbingSword;
+                    parentSword.postIts.Add(gameObject);
+
+                    transform.parent = parentSword.postItsParent.transform;
+                    parentSword.ArrangeInCircle();
+
                 }
             }
         }
