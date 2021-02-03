@@ -24,8 +24,6 @@ public class PostIt : MonoBehaviour
                     if (parentSword != null && parentSword != stabbingSword)
                     {
                         parentSword.postIts.Remove(gameObject);
-                        //parentSword.postIts.TrimExcess();
-
                     }
 
                     parentSword = stabbingSword;

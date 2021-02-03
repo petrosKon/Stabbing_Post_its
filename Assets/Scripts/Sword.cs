@@ -12,13 +12,21 @@ public class Sword : MonoBehaviour
     public List<GameObject> postIts = new List<GameObject>();
     public GameObject postItsParent;
     public List<Transform> postItsFinalTransforms = new List<Transform>();
-   
+    public GameObject rightHand;
+    public GameObject leftHand;
+    public Hand grabbedBy;
 
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
     public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 180);
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
+    public static readonly float rotationAmount = 200f;
+    public static readonly float grabDistance = 0.07f;
 
-    private readonly float rotationAmount = 200f;
+    public enum Hand
+    {
+        Left,
+        Right
+    }
 
     public void ReturnToFinalPosition()
     {
@@ -52,15 +60,30 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x);
-        if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
+        if(Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance)
         {
-            postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
-        }
-        else if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x < -0.5f)
-        {
-            postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
+            grabbedBy = Hand.Right;
+            if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
+            {
+                postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
+            }
+            else if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x < -0.5f)
+            {
+                postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
 
+            }
+        } else if(Vector3.Distance(transform.position, leftHand.transform.position) < grabDistance)
+        {
+            grabbedBy = Hand.Left;
+            if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x > 0.5f)
+            {
+                postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
+            }
+            else if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x < -0.5f)
+            {
+                postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
+
+            }
         }
     }
 }
