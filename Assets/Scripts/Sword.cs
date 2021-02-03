@@ -22,16 +22,23 @@ public class Sword : MonoBehaviour
     public static readonly float rotationAmount = 200f;
     public static readonly float grabDistance = 0.07f;
 
+    private GameObject displayWall;
+
     public enum Hand
     {
         Left,
         Right
     }
 
+    private void Start()
+    {
+        displayWall = finalTransform.gameObject.transform.parent.gameObject;
+    }
+
     public void ReturnToFinalPosition()
     {
         transform.position = finalTransform.position;
-        transform.rotation = Quaternion.Euler(swordFinalRotation);
+        transform.rotation = Quaternion.Euler(new Vector3(swordFinalRotation.x, swordFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, swordFinalRotation.z));
     }
 
     public void ArrangeInCircle()
@@ -53,7 +60,7 @@ public class Sword : MonoBehaviour
             for (int i = 0; i < postIts.Count; i++)
             {
                 postIts[i].transform.position = postItsFinalTransforms[i].transform.position;
-                postIts[i].transform.rotation = Quaternion.Euler(postItFinalRotation);
+                postIts[i].transform.rotation = Quaternion.Euler(new Vector3(postItFinalRotation.x, postItFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, postItFinalRotation.z));
             }
         }
     }
