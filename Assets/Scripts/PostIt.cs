@@ -5,7 +5,7 @@ using UnityEngine;
 public class PostIt : MonoBehaviour
 {
     public string text;
-
+    
     private readonly float stabbingAngle = 140f;
 
     private void OnTriggerEnter(Collider other)

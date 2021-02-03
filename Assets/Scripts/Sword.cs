@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    [Header("Sword Properties")]
     public string swordName;
     public Transform finalTransform;
     public List<GameObject> postIts = new List<GameObject>();
