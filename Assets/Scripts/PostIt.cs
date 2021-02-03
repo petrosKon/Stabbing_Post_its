@@ -8,7 +8,7 @@ public class PostIt : MonoBehaviour
     public string text;
     public Sword parentSword;
 
-    private readonly float stabbingAngle = 100f;
+    public static readonly float stabbingAngle = 120f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,17 +24,16 @@ public class PostIt : MonoBehaviour
                     if (parentSword != null && parentSword != stabbingSword)
                     {
                         parentSword.postIts.Remove(gameObject);
-                        parentSword.postIts.TrimExcess();
-                        parentSword.ArrangeInCircle();
+                        //parentSword.postIts.TrimExcess();
 
                     }
 
                     parentSword = stabbingSword;
                     parentSword.postIts.Add(gameObject);
+                    Debug.Log("GameObject name: " + gameObject.name + " Parent: " + gameObject.transform.parent);
 
                     transform.parent = parentSword.postItsParent.transform;
                     parentSword.ArrangeInCircle();
-
                 }
             }
         }

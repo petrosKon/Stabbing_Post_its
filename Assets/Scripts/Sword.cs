@@ -14,9 +14,9 @@ public class Sword : MonoBehaviour
     public List<Transform> postItsFinalTransforms = new List<Transform>();
    
 
-    private readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
-    private readonly Vector3 postItFinalRotation = new Vector3(0, -90, 180);
-    private readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
+    public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
+    public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 180);
+    public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
 
     private readonly float rotationAmount = 200f;
 
