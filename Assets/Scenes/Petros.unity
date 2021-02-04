@@ -1757,7 +1757,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -1952,7 +1952,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -5079,7 +5079,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -5439,7 +5439,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -6225,7 +6225,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -6390,7 +6390,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2786274962528356125, guid: 796d502e6dbd2064593932f8b58c5e2a,
         type: 3}
       propertyPath: m_Name
@@ -6620,7 +6620,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hightlightMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 5f2dd013d4c137746ad1d43ef197affe, type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e9b92f3c26119042b2e642e58169db9, type: 3}
 --- !u!4 &3413959313601194440 stripped
