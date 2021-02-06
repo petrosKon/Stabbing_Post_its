@@ -8,19 +8,19 @@ public class PostIt : MonoBehaviour
     public string text;
     public Sword parentSword;
 
-    public static readonly float stabbingAngle = 120f;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Sword"))
+        if (other.GetComponent<Collider>().GetType() == typeof(BoxCollider))
         {
-            Sword stabbingSword = other.GetComponent<Sword>();
-            Debug.Log("Stabbing angle: " + Vector3.Angle(transform.forward, other.gameObject.transform.up));
-            if (Vector3.Angle(transform.forward, other.gameObject.transform.up) > stabbingAngle)
+            if (other.CompareTag("Sword"))
             {
-                Debug.Log("Stabbed");
+                Sword stabbingSword = other.GetComponent<Sword>();
+                Debug.Log("Stabbing angle: " + Vector3.Angle(transform.forward, other.gameObject.transform.up));
+
                 if (!stabbingSword.postIts.Contains(gameObject))
                 {
+                    stabbingSword.VibrateController();
+
                     if (parentSword != null && parentSword != stabbingSword)
                     {
                         parentSword.postIts.Remove(gameObject);

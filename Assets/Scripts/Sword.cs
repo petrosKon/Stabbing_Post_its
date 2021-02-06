@@ -17,7 +17,7 @@ public class Sword : MonoBehaviour
     public Hand grabbedBy;
 
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
-    public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 180);
+    public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 0);
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
     public static readonly float rotationAmount = 200f;
     public static readonly float grabDistance = 0.07f;
@@ -53,6 +53,28 @@ public class Sword : MonoBehaviour
         }
     }
 
+    public void VibrateController()
+    {
+        if (grabbedBy == Hand.Right)
+        {
+            StartCoroutine(Vibrate(0.5f, OVRInput.Controller.RTouch));
+        }
+        else
+        {
+            StartCoroutine(Vibrate(0.5f, OVRInput.Controller.LTouch));
+        }
+    }
+
+    IEnumerator Vibrate(float Seconds, OVRInput.Controller controller)
+    {
+        OVRInput.SetControllerVibration(1, 1, controller);
+
+        yield return new WaitForSeconds(Seconds);
+
+        OVRInput.SetControllerVibration(0, 0, controller);
+
+    }
+
     public void ArrangePostIts()
     {
         if (postIts.Count != 0)
@@ -67,7 +89,7 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance)
+        if (Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance)
         {
             grabbedBy = Hand.Right;
             if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
@@ -79,7 +101,8 @@ public class Sword : MonoBehaviour
                 postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
 
             }
-        } else if(Vector3.Distance(transform.position, leftHand.transform.position) < grabDistance)
+        }
+        else if (Vector3.Distance(transform.position, leftHand.transform.position) < grabDistance)
         {
             grabbedBy = Hand.Left;
             if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x > 0.5f)
