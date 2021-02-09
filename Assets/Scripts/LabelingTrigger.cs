@@ -2,16 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LabelingTrigger : MonoBehaviour
 {
+    public Text canvasText; 
+
     private Sword activeSword;
     private LabelState state;
+
 
     private void Start()
     {
         activeSword = null;
         state = LabelState.Idle;
+        UpdateText();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +36,8 @@ public class LabelingTrigger : MonoBehaviour
             return;
         }
 
-        activeSword.StartVibration();
+        UpdateText();
+        activeSword.StartLabeling();
     }
 
 
@@ -46,8 +52,9 @@ public class LabelingTrigger : MonoBehaviour
         }
 
         state = LabelState.Idle;
-        activeSword.EndVibration();
+        activeSword.StopLabeling();
         activeSword = null;
+        UpdateText();
     }
 
     private Sword GetSword(Collider collider)
@@ -61,6 +68,20 @@ public class LabelingTrigger : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void UpdateText()
+    {
+        if(state == LabelState.Idle)
+        {
+            canvasText.text = "";
+        }
+        else
+        {
+            canvasText.text = "Name your Sword";
+        }
+
+
     }
 
 

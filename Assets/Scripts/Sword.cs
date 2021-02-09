@@ -16,6 +16,13 @@ public class Sword : MonoBehaviour
     public GameObject leftHand;
     public Hand grabbedBy;
 
+
+    public GameObject LaserStyle;
+    private GameObject LaserInstance;
+    private Hovl_Laser LaserScript;
+    private Hovl_Laser2 LaserScript2;
+
+
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
     public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 0);
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
@@ -75,19 +82,30 @@ public class Sword : MonoBehaviour
 
     }
 
-    /**
-     * TODO: Merge VibrateController with this method.
-     * I needed triggers for start and stop vibrating for the labeling
-     */
-    public void StartVibration() {
+
+    public void StartLabeling() {
         OVRInput.Controller controller = grabbedBy == Hand.Right ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
         OVRInput.SetControllerVibration(1, 1, controller);
+        
+        Destroy(LaserInstance);
+
+        Vector3 rot = transform.rotation.eulerAngles;
+        rot = new Vector3(rot.x -90, rot.y, rot.z);
+
+        LaserInstance = Instantiate(LaserStyle, postItsParent.transform.position, Quaternion.Euler(rot));
+        LaserInstance.transform.parent = transform;
+        LaserScript = LaserInstance.GetComponent<Hovl_Laser>();
+        LaserScript2 = LaserInstance.GetComponent<Hovl_Laser2>();
     }
 
-    public void EndVibration()
+    public void StopLabeling()
     {
         OVRInput.Controller controller = grabbedBy == Hand.Right ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
         OVRInput.SetControllerVibration(0, 0, controller);
+
+        if (LaserScript) LaserScript.DisablePrepare();
+        if (LaserScript2) LaserScript2.DisablePrepare();
+        Destroy(LaserInstance, 1);
     }
 
 
