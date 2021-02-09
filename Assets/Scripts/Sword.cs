@@ -75,6 +75,23 @@ public class Sword : MonoBehaviour
 
     }
 
+    /**
+     * TODO: Merge VibrateController with this method.
+     * I needed triggers for start and stop vibrating for the labeling
+     */
+    public void StartVibration() {
+        OVRInput.Controller controller = grabbedBy == Hand.Right ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
+        OVRInput.SetControllerVibration(1, 1, controller);
+    }
+
+    public void EndVibration()
+    {
+        OVRInput.Controller controller = grabbedBy == Hand.Right ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
+        OVRInput.SetControllerVibration(0, 0, controller);
+    }
+
+
+
     public void ArrangePostIts()
     {
         if (postIts.Count != 0)
