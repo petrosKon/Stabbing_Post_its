@@ -1,13 +1,16 @@
 ﻿using Autohand;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Sword : MonoBehaviour
 {
     [Header("Sword Properties")]
     public string swordName;
+    public Text swordNameText;
     public Transform finalTransform;
     public List<GameObject> postIts = new List<GameObject>();
     public GameObject postItsParent;
@@ -15,6 +18,7 @@ public class Sword : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
     public Hand grabbedBy;
+    
 
 
     public GameObject LaserStyle;
@@ -22,6 +26,7 @@ public class Sword : MonoBehaviour
     private Hovl_Laser LaserScript;
     private Hovl_Laser2 LaserScript2;
     private AudioSource audio;
+    private bool namePreview;
 
 
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
@@ -47,7 +52,22 @@ public class Sword : MonoBehaviour
     {
         displayWall = finalTransform.gameObject.transform.parent.gameObject;
         audio = GetComponent<AudioSource>();
+        namePreview = false;
         audio.loop = true;
+        swordNameText.text = swordName;
+    }
+
+    public void brieflyShowSwordName()
+    {
+        swordNameText.text = swordName;
+        StartCoroutine(ShowSwordText());
+    }
+
+    private IEnumerator ShowSwordText()
+    {
+        namePreview = true;
+        yield return new WaitForSeconds(5);
+        namePreview = false;
     }
 
     public void ReturnToFinalPosition()
@@ -136,6 +156,8 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
+        swordNameText.gameObject.SetActive(transform.position == finalTransform.position || namePreview);
+
         if (Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance)
         {
             grabbedBy = Hand.Right;

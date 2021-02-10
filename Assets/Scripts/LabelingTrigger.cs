@@ -33,6 +33,7 @@ public class LabelingTrigger : MonoBehaviour
         Debug.Log($"Sword named {name}");
         activeSword.swordName = name;
         activeSword.StopLabeling();
+        activeSword.brieflyShowSwordName();
 
         state = LabelState.Idle;
         activeSword = null;
