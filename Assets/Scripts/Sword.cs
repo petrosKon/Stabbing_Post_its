@@ -26,6 +26,7 @@ public class Sword : MonoBehaviour
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
     public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 0);
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
+
     public static readonly float rotationAmount = 200f;
     public static readonly float grabDistance = 0.07f;
 
@@ -33,6 +34,7 @@ public class Sword : MonoBehaviour
 
     public enum Hand
     {
+        None,
         Left,
         Right
     }
@@ -46,6 +48,7 @@ public class Sword : MonoBehaviour
     {
         transform.position = finalTransform.position;
         transform.rotation = Quaternion.Euler(new Vector3(swordFinalRotation.x, swordFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, swordFinalRotation.z));
+        grabbedBy = Hand.None;
     }
 
     public void ArrangeInCircle()
