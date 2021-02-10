@@ -12,6 +12,10 @@ public class LabelingTrigger : MonoBehaviour
     private Sword activeSword;
     private LabelState state;
     private AudioSource audio;
+    public AudioClip success;
+    public AudioClip error;
+    public AudioClip question;
+
     private SpeechRecognition speechRecognition;
 
     private void Start()
@@ -25,7 +29,7 @@ public class LabelingTrigger : MonoBehaviour
 
     private void NameSword(string name)
     {
-        // TODO: Voice that tells that sword was named
+        AudioSource.PlayClipAtPoint(success, transform.position);
         Debug.Log($"Sword named {name}");
         activeSword.swordName = name;
         activeSword.StopLabeling();
@@ -58,7 +62,7 @@ public class LabelingTrigger : MonoBehaviour
     private IEnumerator VoiceFromTheSkies()
     {
         activeSword.VibrateController();
-        audio.Play();
+        AudioSource.PlayClipAtPoint(question, transform.position);
 
         yield return new WaitForSeconds(1);
 
@@ -81,8 +85,7 @@ public class LabelingTrigger : MonoBehaviour
             activeSword.StopLabeling();
             state = LabelState.Idle;
             activeSword = null;
-
-            // TODO: Voice that tells that no name was heard
+            AudioSource.PlayClipAtPoint(error, transform.position);
         }
     }
 

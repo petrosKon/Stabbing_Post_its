@@ -21,6 +21,7 @@ public class Sword : MonoBehaviour
     private GameObject LaserInstance;
     private Hovl_Laser LaserScript;
     private Hovl_Laser2 LaserScript2;
+    private AudioSource audio;
 
 
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
@@ -28,6 +29,9 @@ public class Sword : MonoBehaviour
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
     public static readonly float rotationAmount = 200f;
     public static readonly float grabDistance = 0.07f;
+
+
+    
 
     private GameObject displayWall;
 
@@ -40,6 +44,8 @@ public class Sword : MonoBehaviour
     private void Start()
     {
         displayWall = finalTransform.gameObject.transform.parent.gameObject;
+        audio = GetComponent<AudioSource>();
+        audio.loop = true;
     }
 
     public void ReturnToFinalPosition()
@@ -96,10 +102,13 @@ public class Sword : MonoBehaviour
         LaserInstance.transform.parent = transform;
         LaserScript = LaserInstance.GetComponent<Hovl_Laser>();
         LaserScript2 = LaserInstance.GetComponent<Hovl_Laser2>();
+
+        audio.Play();
     }
 
     public void StopLabeling()
     {
+        audio.Stop();
         OVRInput.Controller controller = grabbedBy == Hand.Right ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
         OVRInput.SetControllerVibration(0, 0, controller);
 
