@@ -1,22 +1,37 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;   
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class LabelingTrigger : MonoBehaviour
 {
     public Text canvasText; 
 
     private Sword activeSword;
     private LabelState state;
-
+    private AudioSource audio;
+    private SpeechRecognition speechRecognition;
 
     private void Start()
     {
         activeSword = null;
         state = LabelState.Idle;
-        UpdateText();
+        audio = GetComponent<AudioSource>();
+        speechRecognition = FindObjectOfType<SpeechRecognition>();
+        speechRecognition.OnSpeechRecognized += NameSword;
+    }
+
+    private void NameSword(string name)
+    {
+        // TODO: Voice that tells that sword was named
+        Debug.Log($"Sword named {name}");
+        activeSword.swordName = name;
+        activeSword.StopLabeling();
+
+        state = LabelState.Idle;
+        activeSword = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,32 +45,47 @@ public class LabelingTrigger : MonoBehaviour
         state = LabelState.Active;
         activeSword = GetSword(other);
 
+
         if (activeSword == null)
         {
             // Debug.Log("No Sword found");
             return;
         }
 
-        UpdateText();
-        activeSword.StartLabeling();
+        StartCoroutine(VoiceFromTheSkies());
     }
 
-
-    private void OnTriggerExit(Collider other)
+    private IEnumerator VoiceFromTheSkies()
     {
-        Sword triggerSword = GetSword(other);
+        activeSword.VibrateController();
+        audio.Play();
 
-        if(!GameObject.ReferenceEquals(triggerSword, activeSword))
+        yield return new WaitForSeconds(1);
+
+        activeSword.StartLabeling();
+
+        yield return new WaitForSeconds(audio.clip.length - 1);
+
+        speechRecognition.startRecording();
+
+        yield return new WaitForSeconds(5);
+
+        speechRecognition.stopRecording();
+
+
+        yield return new WaitForSeconds(4);
+
+        if (state == LabelState.Active) // If no OnSpeechRecognized event came, just deactivate labeling 
         {
-            //Debug.Log("Active Sword is not the one that caused trigger");
-            return;
-        }
+            Debug.Log("No SpeechRecognised after 4 seconds");
+            activeSword.StopLabeling();
+            state = LabelState.Idle;
+            activeSword = null;
 
-        state = LabelState.Idle;
-        activeSword.StopLabeling();
-        activeSword = null;
-        UpdateText();
+            // TODO: Voice that tells that no name was heard
+        }
     }
+
 
     private Sword GetSword(Collider collider)
     {
@@ -69,22 +99,6 @@ public class LabelingTrigger : MonoBehaviour
 
         return null;
     }
-
-    private void UpdateText()
-    {
-        if(state == LabelState.Idle)
-        {
-            canvasText.text = "";
-        }
-        else
-        {
-            canvasText.text = "Name your Sword";
-        }
-
-
-    }
-
-
 }
 
 public enum LabelState
