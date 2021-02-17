@@ -15,12 +15,9 @@ public class Sword : MonoBehaviour
     public List<GameObject> postIts = new List<GameObject>();
     public GameObject postItsParent;
     public List<Transform> postItsFinalTransforms = new List<Transform>();
-    public GameObject rightHand;
-    public GameObject leftHand;
     public Hand grabbedBy;
+    public bool firstPicked = false;
     
-
-
     public GameObject LaserStyle;
     private GameObject LaserInstance;
     private Hovl_Laser LaserScript;
@@ -28,16 +25,18 @@ public class Sword : MonoBehaviour
     private AudioSource audio;
     private bool namePreview;
 
-
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
     public static readonly Vector3 postItFinalRotation = new Vector3(0, -90, 0);
     public static readonly Vector3 postItCircularRotation = new Vector3(0, 0, 0);
+    public static readonly float vibrationSeconds = 0.5f;
 
     public static readonly float rotationAmount = 200f;
-    public static readonly float grabDistance = 0.07f;
+    public static readonly float grabDistance = 0.1f;
 
+    private GameObject leftHand;
+    private GameObject rightHand;
 
-    
+    public static Action onSwordFirstPickUp;
 
     private GameObject displayWall;
 
@@ -50,6 +49,9 @@ public class Sword : MonoBehaviour
 
     private void Start()
     {
+        leftHand = GameObject.FindGameObjectWithTag("LeftHand");
+        rightHand = GameObject.FindGameObjectWithTag("RightHand");
+
         displayWall = finalTransform.gameObject.transform.parent.gameObject;
         audio = GetComponent<AudioSource>();
         namePreview = false;
@@ -72,8 +74,16 @@ public class Sword : MonoBehaviour
 
     public void ReturnToFinalPosition()
     {
+        StartCoroutine(ReturnToFinalPositionCoroutine());
+    }
+
+    public IEnumerator ReturnToFinalPositionCoroutine()
+    {
         transform.position = finalTransform.position;
         transform.rotation = Quaternion.Euler(new Vector3(swordFinalRotation.x, swordFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, swordFinalRotation.z));
+
+        yield return new WaitForSeconds(vibrationSeconds);
+
         grabbedBy = Hand.None;
     }
 
@@ -95,7 +105,7 @@ public class Sword : MonoBehaviour
         {
             StartCoroutine(Vibrate(0.5f, OVRInput.Controller.RTouch));
         }
-        else
+        else if (grabbedBy == Hand.Left)
         {
             StartCoroutine(Vibrate(0.5f, OVRInput.Controller.LTouch));
         }
@@ -157,32 +167,34 @@ public class Sword : MonoBehaviour
     private void Update()
     {
         swordNameText.gameObject.SetActive(transform.position == finalTransform.position || namePreview);
-
-        if (Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance)
+        if (Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance && transform.parent.tag.Equals("Player"))
         {
-            grabbedBy = Hand.Right;
-            if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x > 0.5f)
-            {
-                postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
-            }
-            else if (OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).x < -0.5f)
-            {
-                postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
-
-            }
+            PickAndRotateSword(Hand.Right, OVRInput.Axis2D.SecondaryThumbstick);
         }
-        else if (Vector3.Distance(transform.position, leftHand.transform.position) < grabDistance)
+        else if (Vector3.Distance(transform.position, leftHand.transform.position) < grabDistance && transform.parent.tag.Equals("Player"))
         {
-            grabbedBy = Hand.Left;
-            if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x > 0.5f)
-            {
-                postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
-            }
-            else if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x < -0.5f)
-            {
-                postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
+            PickAndRotateSword(Hand.Left, OVRInput.Axis2D.PrimaryThumbstick);
+        }
 
-            }
+    }
+
+    private void PickAndRotateSword(Hand pickedBy, OVRInput.Axis2D thumbstick)
+    {
+        if (!firstPicked)
+        {
+            firstPicked = true;
+            onSwordFirstPickUp();
+        }
+
+        grabbedBy = pickedBy;
+        if (OVRInput.Get(thumbstick).x > 0.5f)
+        {
+            postItsParent.transform.Rotate(Vector3.up, rotationAmount * Time.deltaTime);
+        }
+        else if (OVRInput.Get(thumbstick).x < -0.5f)
+        {
+            postItsParent.transform.Rotate(Vector3.up, -rotationAmount * Time.deltaTime);
+
         }
     }
 }

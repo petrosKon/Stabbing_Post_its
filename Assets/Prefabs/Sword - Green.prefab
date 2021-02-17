@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordName: 
+  swordNameText: {fileID: 0}
   finalTransform: {fileID: 0}
   postIts: []
   postItsParent: {fileID: 705384781070052187}
@@ -168,6 +169,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  rightHand: {fileID: 0}
+  leftHand: {fileID: 0}
+  grabbedBy: 0
+  LaserStyle: {fileID: 0}
 --- !u!136 &2786274962192337177
 CapsuleCollider:
   m_ObjectHideFlags: 0

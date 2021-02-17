@@ -10,6 +10,8 @@ TagManager:
   - Sword
   - Player Hand
   - Post-It
+  - RightHand
+  - LeftHand
   layers:
   - Default
   - TransparentFX
