@@ -10,7 +10,8 @@ public class Sword : MonoBehaviour
 {
     [Header("Sword Properties")]
     public string swordName;
-    public Text swordNameText;
+    public Text swordNamePreview;
+    public Text swordNameLabel;
     public Transform finalTransform;
     public List<GameObject> postIts = new List<GameObject>();
     public GameObject postItsParent;
@@ -56,12 +57,13 @@ public class Sword : MonoBehaviour
         audio = GetComponent<AudioSource>();
         namePreview = false;
         audio.loop = true;
-        swordNameText.text = swordName;
+        swordNamePreview.text = swordName;
     }
 
     public void brieflyShowSwordName()
     {
-        swordNameText.text = swordName;
+        swordNamePreview.text = swordName;
+        swordNameLabel.text = swordName;
         StartCoroutine(ShowSwordText());
     }
 
@@ -80,7 +82,8 @@ public class Sword : MonoBehaviour
     public IEnumerator ReturnToFinalPositionCoroutine()
     {
         transform.position = finalTransform.position;
-        transform.rotation = Quaternion.Euler(new Vector3(swordFinalRotation.x, swordFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, swordFinalRotation.z));
+        transform.rotation = finalTransform.rotation;
+        //transform.rotation = Quaternion.Euler(new Vector3(swordFinalRotation.x, swordFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, swordFinalRotation.z));
 
         yield return new WaitForSeconds(vibrationSeconds);
 
@@ -159,14 +162,15 @@ public class Sword : MonoBehaviour
             for (int i = 0; i < postIts.Count; i++)
             {
                 postIts[i].transform.position = postItsFinalTransforms[i].transform.position;
-                postIts[i].transform.rotation = Quaternion.Euler(new Vector3(postItFinalRotation.x, postItFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, postItFinalRotation.z));
+                postIts[i].transform.rotation = postItsFinalTransforms[i].transform.rotation;
+                //postIts[i].transform.rotation = Quaternion.Euler(new Vector3(postItFinalRotation.x, postItFinalRotation.y + displayWall.transform.rotation.eulerAngles.y, postItFinalRotation.z));
             }
         }
     }
 
     private void Update()
     {
-        swordNameText.gameObject.SetActive(transform.position == finalTransform.position || namePreview);
+        swordNamePreview.gameObject.SetActive(namePreview);
         if (Vector3.Distance(transform.position, rightHand.transform.position) < grabDistance && transform.parent.tag.Equals("Player"))
         {
             PickAndRotateSword(Hand.Right, OVRInput.Axis2D.SecondaryThumbstick);

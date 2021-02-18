@@ -30,6 +30,7 @@ public class SwordSpawner : MonoBehaviour
     {
         for (int i = 1; i < swords.Length; i++)
         {
+            Debug.Log($"Current sword: {i}");
             swords[i].transform.position = swordInitialPosition;
             swords[i].transform.rotation = Quaternion.Euler(swordInitialRotation);
         }

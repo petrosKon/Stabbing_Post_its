@@ -111,7 +111,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_DynamicPixelsPerUnit: 3
 --- !u!114 &8584383053987439884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordName: 
+  swordNamePreview: {fileID: 0}
+  swordNameLabel: {fileID: 0}
   finalTransform: {fileID: 0}
   postIts: []
   postItsParent: {fileID: 628771720}
@@ -346,9 +348,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rightHand: {fileID: 0}
-  leftHand: {fileID: 0}
   grabbedBy: 0
+  firstPicked: 0
   LaserStyle: {fileID: 0}
 --- !u!136 &3413959313601194442
 CapsuleCollider:
