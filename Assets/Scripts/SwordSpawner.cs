@@ -11,6 +11,9 @@ public class SwordSpawner : MonoBehaviour
     [Header("Effects")]
     public GameObject fireCrackle;
 
+    public GameObject GroupHolder1;
+    public GameObject GroupHolder2;
+
     private int currentSword = 0;
 
     public static readonly Vector3 swordInitialRotation = new Vector3(180f, 90f, 20f);
@@ -40,17 +43,30 @@ public class SwordSpawner : MonoBehaviour
     {
         currentSword++;
         Debug.Log($"Current sword: {currentSword}");
-        Sword newSword = swords[currentSword];
-        newSword.gameObject.SetActive(true);
+        
+        
         StartCoroutine(PlayEffect());
+
+        if(currentSword == 5)
+        {
+            GroupHolder1.GetComponent<GroupHolderManager>().ShowTop();
+        }
+        if(currentSword == 7)
+        {
+            GroupHolder2.GetComponent<GroupHolderManager>().ShowTop();
+        }
+
     }
 
     private IEnumerator PlayEffect()
     {
         fireCrackle.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         fireCrackle.SetActive(false);
+
+        Sword newSword = swords[currentSword];
+        newSword.gameObject.SetActive(true);
     }
 }

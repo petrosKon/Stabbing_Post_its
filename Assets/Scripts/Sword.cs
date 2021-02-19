@@ -24,6 +24,12 @@ public class Sword : MonoBehaviour
     private Hovl_Laser LaserScript;
     private Hovl_Laser2 LaserScript2;
     private AudioSource audio;
+
+    internal bool HasSpace()
+    {
+        return postIts.Count < 10;
+    }
+
     private bool namePreview;
 
     public static readonly Vector3 swordFinalRotation = new Vector3(180, 90, 180);
@@ -180,6 +186,11 @@ public class Sword : MonoBehaviour
             PickAndRotateSword(Hand.Left, OVRInput.Axis2D.PrimaryThumbstick);
         }
 
+    }
+
+    public bool IsInFinalPosition()
+    {
+        return transform.position == finalTransform.position && transform.rotation == finalTransform.rotation;
     }
 
     private void PickAndRotateSword(Hand pickedBy, OVRInput.Axis2D thumbstick)

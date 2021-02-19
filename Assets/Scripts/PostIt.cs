@@ -17,7 +17,7 @@ public class PostIt : MonoBehaviour
                 Sword stabbingSword = other.GetComponent<Sword>();
                 Debug.Log("Stabbing angle: " + Vector3.Angle(transform.forward, other.gameObject.transform.up));
 
-                if (!stabbingSword.postIts.Contains(gameObject))
+                if (!stabbingSword.postIts.Contains(gameObject) && stabbingSword.firstPicked && !stabbingSword.IsInFinalPosition() && stabbingSword.HasSpace()) // Prevent Bug where sword in stone or sword in wall snitches a postit from the sword in the persons hand
                 {
                     stabbingSword.VibrateController();
 
