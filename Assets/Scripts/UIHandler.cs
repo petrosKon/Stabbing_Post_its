@@ -16,7 +16,7 @@ public class UIHandler : MonoBehaviour
         speechRecognition.OnSpeechRecognized += UpdateUI;
 
         // Wait until the mic is initialized before we setup the UI.
-        while(speechRecognition.mic == null)
+        while (speechRecognition.mic == null)
         {
             yield return null;
         }
@@ -25,8 +25,8 @@ public class UIHandler : MonoBehaviour
 
     private void SetupUI()
     {
-        mic.text = speechRecognition.mic.Name;
-        phrase.text = "";
+        // mic.text = speechRecognition.mic.Name;
+        // phrase.text = "";
     }
 
     private void UpdateUI(string str)
@@ -36,8 +36,8 @@ public class UIHandler : MonoBehaviour
 
     private IEnumerator UpdateUIEnum(string str)
     {
-        phrase.text = $"The sowrd is now named: {str}";   
+        //phrase.text = $"The sowrd is now named: {str}";   
         yield return new WaitForSeconds(10);
-        phrase.text = "";
+        //phrase.text = "";
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class LabelingTrigger : MonoBehaviour
 {
-    public Text canvasText; 
 
     private Sword activeSword;
     private LabelState state;
@@ -47,7 +46,6 @@ public class LabelingTrigger : MonoBehaviour
             return;
         }
 
-        state = LabelState.Active;
         activeSword = GetSword(other);
 
 
@@ -57,11 +55,13 @@ public class LabelingTrigger : MonoBehaviour
             return;
         }
 
+        state = LabelState.Active;
         StartCoroutine(VoiceFromTheSkies());
     }
 
     private IEnumerator VoiceFromTheSkies()
     {
+
         activeSword.VibrateController();
         AudioSource.PlayClipAtPoint(question, transform.position);
 
@@ -76,7 +76,6 @@ public class LabelingTrigger : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         speechRecognition.stopRecording();
-
 
         yield return new WaitForSeconds(4);
 
